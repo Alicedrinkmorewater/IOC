@@ -8,16 +8,15 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DIContainerGenericType<E> {
+public class DIContainerGenericType {
 
     Logger logger = LoggerFactory.getLogger(DIContainer.class);
-    private E ele;
-    public final Map<Class<?>, E> beanInstanceMap = new HashMap<>();
+    public final Map<Class<?>, Object> beanInstanceMap = new HashMap<>();
 
     public void register(Class x) {
         try {
             logger.info("TEST");
-            beanInstanceMap.put(x, (E)x.newInstance());
+            beanInstanceMap.put(x, x.newInstance());
         } catch (IllegalAccessException iae) {
             logger.error(iae.getMessage());
 
@@ -26,7 +25,7 @@ public class DIContainerGenericType<E> {
 
 
         try {
-            for (Map.Entry<Class<?>, E> entry : beanInstanceMap.entrySet()) {
+            for (Map.Entry<Class<?>, Object> entry : beanInstanceMap.entrySet()) {
                 Class<?> clazz = entry.getKey();
                 Object obj = entry.getValue();
                 Field[] fields = clazz.getDeclaredFields();
@@ -34,7 +33,7 @@ public class DIContainerGenericType<E> {
                     if (field.isAnnotationPresent(AliceInject.class)) {
                         Class<?> fieldClazz = field.getType();
                         field.setAccessible(true);
-                        E fieldObj = beanInstanceMap.get(fieldClazz);
+                        Object fieldObj = beanInstanceMap.get(fieldClazz);
                         field.set(obj, fieldObj);
                     }
                 }
@@ -45,7 +44,7 @@ public class DIContainerGenericType<E> {
 
     }
 
-    public E get(Class x) {
-        return beanInstanceMap.get(x);
+    public <E> E get(Class x) {
+        return (E)beanInstanceMap.get(x);
     }
 }

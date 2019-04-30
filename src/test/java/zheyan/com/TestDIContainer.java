@@ -19,12 +19,12 @@ public class TestDIContainer {
 
     @Test
     public void testGetClassGenericType() {
-        zheyan.com.DIContainerGenericType container = new zheyan.com.DIContainerGenericType<Object>();
+        zheyan.com.DIContainerGenericType container = new zheyan.com.DIContainerGenericType();
         container.register(B.class);
         container.register(A.class);
 
-        B b = (B)container.get(B.class);
-        A a = (A)container.get(A.class);
+        B b = container.get(B.class);
+        A a = container.get(A.class);
         Assert.assertEquals(b.foofoo(), a.foofoofoo());
     }
 }

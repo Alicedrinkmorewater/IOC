@@ -1,4 +1,23 @@
 # exclude .idea/
-.idea/
+.idea/*
 # exclude target/
 target/
+
+.DS_Store
+*.iml
+*.ipr
+*.iws
+*.orig
+*.rej
+**/.keep
+*.sdf
+*.suo
+*.vcxproj.user
+*.patch
+.idea
+.svn
+.classpath
+.project
+.settings
+target
+build
